@@ -17,6 +17,7 @@ TemperatureController* tempController;
 TaskHandle_t MeasuringTask;
 TaskHandle_t MonitoringTask;
 bool isNetworkConnected;
+float frequency = 1;
 
 // MQTT broker details
 const char* mqtt_server = "34.154.239.184";
@@ -39,19 +40,16 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.println("Payload ricevuto: " + jsonMessage);
 
   // Parsing del JSON
-  DynamicJsonDocument doc(200);
+  JsonDocument doc;
   DeserializationError error = deserializeJson(doc, jsonMessage);
-
   if (error) {
     Serial.print("Errore nel parsing JSON: ");
     Serial.println(error.c_str());
     return;
   }
 
-  // Leggi i valori dal JSON
-  float frequency = doc[topic_frequency]; 
+  frequency = doc["frequencyMultiplier"];
 
-  // Stampa i valori
   Serial.print("frequency: ");
   Serial.println(frequency);
 }

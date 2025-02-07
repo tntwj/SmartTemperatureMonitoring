@@ -9,7 +9,6 @@ SendingSamples::SendingSamples() {
 void SendingSamples::execute() {
     Serial.println("Sending State");
     String jsonMessage = "{\"temperature\":" + String(tempController->getTemp()) + "}";
-    // Pubblicazione del messaggio JSON
     client.publish(topic_samples, jsonMessage.c_str());
 }
 

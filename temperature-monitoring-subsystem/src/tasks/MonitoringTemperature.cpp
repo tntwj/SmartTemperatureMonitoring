@@ -10,7 +10,7 @@ void monitoringTask(void* parameter) {
     State* currentState = new Idle();
     currentState->execute();
     while(1) {
-        delay(TASKS_PERIOD);
+        delay(TASKS_PERIOD / frequency);
         State* nextState = currentState->next();
         if (nextState != nullptr) {
             currentState = nextState;
